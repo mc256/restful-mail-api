@@ -36,7 +36,7 @@ app.use(function (error, req, res, next){
     res.status(500).send({
         status:500,
         statusText:'Internal Server Error',
-        error: error
+        error: [error]
     });
 });
 

@@ -43,7 +43,7 @@ class forwarding_operation{
                     destination_account,
                 ]
             );
-            return JSON.stringify({affectedRows: result.affectedRows});
+            return {affectedRows: result.affectedRows};
         }catch (e) {
             throw e;
         }finally {
@@ -61,7 +61,7 @@ class forwarding_operation{
                     destination_account
                 ]
             );
-            return JSON.stringify({affectedRows: result.affectedRows});
+            return {affectedRows: result.affectedRows};
         }catch (e) {
             throw e;
         }finally {

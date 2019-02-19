@@ -28,12 +28,40 @@ router.get('/', validate({
     }
 });
 
-router.put('/',async function(req, res, next){
-
+router.put('/', validate({
+    body:{
+        source: joi.string().email().required(),
+        destination: joi.string().email().required()
+    }
+}), async function(req, res, next){
+    try{
+        const result = await data_source.add(req.body.source, req.body.destination);
+        res.send({
+            status:200,
+            statusText:'OK',
+            data: result
+        })
+    }catch (e) {
+        next(e);
+    }
 });
 
-router.delete('/', async function (req, res, next){
-
+router.delete('/', validate({
+    body:{
+        source: joi.string().email().required(),
+        destination: joi.string().email().required()
+    }
+}),async function (req, res, next){
+    try{
+        const result = await data_source.delete(req.body.source, req.body.destination);
+        res.send({
+            status: 200,
+            statusText: 'OK',
+            data: result
+        })
+    }catch (e) {
+        next(e);
+    }
 });
 
 module.exports = router;
