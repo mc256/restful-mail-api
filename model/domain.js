@@ -2,7 +2,7 @@ const db_pool = require('./database');
 
 class domain_operation{
 
-    static async list_domain(keyword = '', offset = 0) {
+    static async list(keyword = '', offset = 0) {
         let connection;
         try {
             connection = await db_pool.getConnection();
@@ -22,7 +22,7 @@ class domain_operation{
         }
     }
 
-    static  async add_domain(domain_name){
+    static  async add(domain_name){
         let connection;
         try {
             connection = await db_pool.getConnection();
@@ -38,7 +38,7 @@ class domain_operation{
         }
     }
 
-    static async delete_domain(domain_name){
+    static async delete(domain_name){
         let connection;
         try {
             connection = await db_pool.getConnection();
