@@ -1,7 +1,7 @@
 const db_pool = require('./database');
 
 class forwarding_operation{
-    static async list(source_keyword = '', destination_keyword = '', offset = 0) {
+    static async list(source_keyword = '', destination_keyword = '', offset = 0, page_size = parseInt(process.env.DEFAULT_PAGE_SIZE)) {
         let connection;
         try {
             connection = await db_pool.getConnection();
@@ -10,11 +10,20 @@ class forwarding_operation{
                 [
                     '%' + source_keyword + '%',
                     '%' + destination_keyword + '%',
-                    parseInt(process.env.DEFAULT_PAGE_SIZE),
+                    page_size,
                     offset
                 ]
             );
-            return JSON.stringify(result);
+            let count;
+            count = await connection.query('SELECT COUNT(*) AS count FROM `domains`');
+            return {
+                data: result,
+                page: {
+                    current: offset,
+                    pageSize: page_size,
+                    total: count[0].count
+                }
+            };
         }catch (e) {
             throw e;
         }finally {
@@ -34,7 +43,7 @@ class forwarding_operation{
                     destination_account,
                 ]
             );
-            return JSON.stringify({"affectedRows": result.affectedRows});
+            return JSON.stringify({affectedRows: result.affectedRows});
         }catch (e) {
             throw e;
         }finally {
@@ -52,7 +61,7 @@ class forwarding_operation{
                     destination_account
                 ]
             );
-            return JSON.stringify({"affectedRows": result.affectedRows});
+            return JSON.stringify({affectedRows: result.affectedRows});
         }catch (e) {
             throw e;
         }finally {

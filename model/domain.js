@@ -27,10 +27,10 @@ class domain_operation{
         try {
             connection = await db_pool.getConnection();
             let result = await connection.query('INSERT INTO `domains` (`domain`) VALUES (?);', [domain_name]);
-            return JSON.stringify({"affectedRows": result.affectedRows});
+            return JSON.stringify({affectedRows: result.affectedRows});
         }catch (e) {
             if (e.code.toString() === 'ER_DUP_ENTRY'){
-                return JSON.stringify({"affectedRows":0});
+                return JSON.stringify({affectedRows:0});
             }
             throw e;
         }finally {
@@ -43,7 +43,7 @@ class domain_operation{
         try {
             connection = await db_pool.getConnection();
             let result = await connection.query('DELETE FROM `domains` WHERE `domains`.`domain` = ?', [domain_name]);
-            return JSON.stringify({"affectedRows": result.affectedRows});
+            return JSON.stringify({affectedRows: result.affectedRows});
         }catch (e) {
             throw e;
         }finally {

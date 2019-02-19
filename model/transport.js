@@ -12,7 +12,7 @@ class transport_operation{
                     destination_domain,
                 ]
             );
-            return JSON.stringify({"affectedRows": result.affectedRows});
+            return JSON.stringify({affectedRows: result.affectedRows});
         }catch (e) {
             throw e;
         }finally {
@@ -52,7 +52,7 @@ class transport_operation{
                     destination_domain
                 ]
             );
-            return JSON.stringify({"affectedRows": result.affectedRows});
+            return JSON.stringify({affectedRows: result.affectedRows});
         }catch (e) {
             throw e;
         }finally {

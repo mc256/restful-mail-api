@@ -1,22 +1,14 @@
 const express = require('express');
-const validate = require('express-validation');
-const common_validation = require('../model/validation/common');
-const data_source = require('../model/domain');
 const router = express.Router();
 
-router.get('/domain/:keyword?', validate(common_validation), async function (req, res, next) {
-  try {
-    res.send(JSON.stringify(await data_source.list_domain(req.params.keyword)))
-  }catch (e) {
-    res.status(500).send(JSON.stringify(e))
-  }
-});
+const domain_ctrl  = require('./domain');
+const forwarding_ctrl  = require('./forwarding');
+const transport_ctrl  = require('./transport');
+const user_ctrl  = require('./user');
 
-router.post('/domain',async function(req, res, next){
-  console.log(req.body.domain_name);
-  console.log(req.body.testt);
-
-
-});
+router.use('/domain', domain_ctrl);
+router.use('/forwarding', forwarding_ctrl);
+router.use('/transport', transport_ctrl);
+router.use('/user', user_ctrl);
 
 module.exports = router;
