@@ -15,13 +15,17 @@ router.get('/', validate({
         keywordTo: joi.string().optional()
     }
 }), async function (req, res, next) {
-    const result = await data_source.list(req.body.keywordForm, req.body.keywordTo, req.body.offset, req.body.pageSize);
-    res.send({
-        status:200,
-        statusText:'OK',
-        data: result.data,
-        page: result.page
-    });
+    try{
+        const result = await data_source.list(req.body.keywordForm, req.body.keywordTo, req.body.offset, req.body.pageSize);
+        res.send({
+            status:200,
+            statusText:'OK',
+            data: result.data,
+            page: result.page
+        });
+    }catch (e) {
+        next(e);
+    }
 });
 
 router.put('/',async function(req, res, next){

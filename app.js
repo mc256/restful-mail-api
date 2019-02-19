@@ -25,11 +25,19 @@ app.use('/', indexRouter);
 app.use('/'+process.env.APP_VERSION, mainRouter);
 
 app.use(function(req, res, next) {
-    res.status(404).send(JSON.stringify({'error':'not found'}));
+    res.status(404).send({
+        status:404,
+        statusText:'Not Found',
+        error: []
+    });
 });
 
 app.use(function (error, req, res, next){
-    res.status(500).send(JSON.stringify(error));
+    res.status(500).send({
+        status:500,
+        statusText:'Internal Server Error',
+        error: error
+    });
 });
 
 module.exports = app;
