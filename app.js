@@ -5,6 +5,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const swagger = require('swagger-ui-express');
+const swaggerDocs = require('./docs.json');
+
 const indexRouter = require('./routes/index');
 const mainRouter = require('./routes/main');
 
@@ -15,6 +18,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/docs', swagger.serve, swagger.setup(swaggerDocs));
 
 app.all('/*', function(req, res, next){
     res.setHeader('Content-Type', 'application/json');
